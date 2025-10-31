@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  server:
+    build: ./server
+    container_name: kebele_server
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    volumes:
+      - ./server:/app
+    depends_on:
+      - db
+
+  client:
+    build: ./client
+    container_name: kebele_client
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+
+  db:
+    image: postgres:15
+    container_name: kebele_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: kebele_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
