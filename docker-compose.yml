@@ -9,7 +9,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./server:/app
+      - ./Server:/app
     depends_on:
       - db
 
@@ -17,7 +17,7 @@ services:
     build: ./Client
     container_name: kebele_client
     ports:
-      - "3000:80"
+      - "3000:3000"
     depends_on:
       - server
 
